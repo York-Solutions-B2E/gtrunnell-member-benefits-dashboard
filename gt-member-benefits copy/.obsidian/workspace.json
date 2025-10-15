@@ -1,0 +1,232 @@
+{
+  "main": {
+    "id": "cefc39df6eb1b58f",
+    "type": "split",
+    "children": [
+      {
+        "id": "2f07231b79dbd808",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c80842a759adfa05",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "code-templates/GoogleLoginButtonTemp.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "GoogleLoginButtonTemp"
+            }
+          },
+          {
+            "id": "ed2623c9e0b96c4e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SpringOIDCNotes/Untitled.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Untitled"
+            }
+          },
+          {
+            "id": "fc7b859f90d532dd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OIDC_Auth_Setup.md.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "OIDC_Auth_Setup.md"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c1fe5ac7ad6345fa",
+    "type": "split",
+    "children": [
+      {
+        "id": "908edd197bd271ef",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "22319593841e3f41",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "9d8b481e28763c06",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "888ebd33f6aca759",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f4ab460f2f7400ba",
+    "type": "split",
+    "children": [
+      {
+        "id": "01a9884a825de1e7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "698c95c3d7965b51",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "code-templates/GoogleLoginButtonTemp.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for GoogleLoginButtonTemp"
+            }
+          },
+          {
+            "id": "fda10954738b8edd",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "code-templates/GoogleLoginButtonTemp.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from GoogleLoginButtonTemp"
+            }
+          },
+          {
+            "id": "578dbe25d3d0a909",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "ab72af1b0805eb10",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "code-templates/GoogleLoginButtonTemp.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of GoogleLoginButtonTemp"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "c80842a759adfa05",
+  "lastOpenFiles": [
+    "OIDC_Auth_Setup.md.md",
+    "SpringOIDCNotes/Untitled.md",
+    "code-templates/GoogleLoginButtonExplanation.md",
+    "code-templates/GoogleLoginButtonTemp.md",
+    "Untitled",
+    "code-templates/index.html.md",
+    "code-templates",
+    "Welcome.md",
+    "SpringOIDCNotes"
+  ]
+}
