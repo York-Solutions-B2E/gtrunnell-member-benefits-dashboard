@@ -13,15 +13,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults()) // ✅ Required for preflight CORS to work
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
-
         return http.build();
     }
 }
-
