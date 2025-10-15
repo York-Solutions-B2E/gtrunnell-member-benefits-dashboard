@@ -33,7 +33,7 @@ function GoogleLoginButton() {
                 headers: { Authorization: `Bearer ${response.credential}` },
             });
             console.log("✅ Backend says:", res.data);
-            alert(res.data);
+            alert(res.data.message);
         } catch (err) {
             console.error("❌ Error calling backend:", err);
         }
