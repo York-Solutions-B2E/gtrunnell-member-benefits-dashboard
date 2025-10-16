@@ -8,7 +8,7 @@ export default function PrivatePage() {
     useEffect(() => {
         if (!token) return; // don't fetch if no token
 
-        axios.get("http://localhost:8080/api/private/hello", {
+        axios.get("http://localhost:8080/api/private", {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then(res => setData(res.data))

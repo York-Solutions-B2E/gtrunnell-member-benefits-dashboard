@@ -1,8 +1,8 @@
+
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
 function GoogleLoginButton() {
-    console.log("googleloginbutton");
 
     useEffect(() => {
         const initializeGoogle = () => {

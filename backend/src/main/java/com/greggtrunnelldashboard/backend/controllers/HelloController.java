@@ -15,7 +15,7 @@ public class HelloController {
 
         return "Hello Public!";
     }
-    @GetMapping("/api/private/hello")
+    @GetMapping("/api/private")
     public Map<String, Object> privateHello(@AuthenticationPrincipal Jwt jwt) {
         return Map.of(
                 "message", "Hello from PRIVATE endpoint!",
