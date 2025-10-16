@@ -1,20 +1,27 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 function GoogleLoginButton() {
+    console.log("googleloginbutton");
+
     useEffect(() => {
-        // Wait until Google SDK is loaded
         const initializeGoogle = () => {
+            const buttonDiv = document.getElementById("googleSignInDiv");
+            if (!buttonDiv) {
+                // Element not yet in DOM — try again shortly
+                setTimeout(initializeGoogle, 100);
+                return;
+            }
+
             if (window.google && window.google.accounts && window.google.accounts.id) {
                 window.google.accounts.id.initialize({
-                    client_id: "491839525697-1ad0pir6k4fmvss8dn5m2qbjkecvso1e.apps.googleusercontent.com", // <-- your Google client ID
+                    client_id: "491839525697-1ad0pir6k4fmvss8dn5m2qbjkecvso1e.apps.googleusercontent.com",
                     callback: handleCredentialResponse,
                 });
-                window.google.accounts.id.renderButton(
-                    document.getElementById("googleSignInDiv"),
-                    { theme: "outline", size: "large" }
-                );
+                window.google.accounts.id.renderButton(buttonDiv, {
+                    theme: "outline",
+                    size: "large",
+                });
             } else {
                 setTimeout(initializeGoogle, 100);
             }
@@ -23,20 +30,12 @@ function GoogleLoginButton() {
         initializeGoogle();
     }, []);
 
-    const handleCredentialResponse = async (response) => {
+    const handleCredentialResponse = (response) => {
         console.log("Encoded JWT ID token:", response.credential);
         const decoded = jwtDecode(response.credential);
         console.log("Decoded token:", decoded);
-
-        try {
-            const res = await axios.get("http://localhost:8080/api/private/hello", {
-                headers: { Authorization: `Bearer ${response.credential}` },
-            });
-            console.log("✅ Backend says:", res.data);
-            alert(res.data.message);
-        } catch (err) {
-            console.error("❌ Error calling backend:", err);
-        }
+        localStorage.setItem("token", response.credential); // ✅ save token
+        window.location.href = "/private"; // ✅ redirect
     };
 
     return (
