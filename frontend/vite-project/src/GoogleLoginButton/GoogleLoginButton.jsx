@@ -8,7 +8,6 @@ function GoogleLoginButton() {
         const initializeGoogle = () => {
             const buttonDiv = document.getElementById("googleSignInDiv");
             if (!buttonDiv) {
-                // Element not yet in DOM — try again shortly
                 setTimeout(initializeGoogle, 100);
                 return;
             }
@@ -34,8 +33,8 @@ function GoogleLoginButton() {
         console.log("Encoded JWT ID token:", response.credential);
         const decoded = jwtDecode(response.credential);
         console.log("Decoded token:", decoded);
-        localStorage.setItem("token", response.credential); // ✅ save token
-        window.location.href = "/private"; // ✅ redirect
+        localStorage.setItem("token", response.credential);
+        window.location.href = "/private";
     };
 
     return (

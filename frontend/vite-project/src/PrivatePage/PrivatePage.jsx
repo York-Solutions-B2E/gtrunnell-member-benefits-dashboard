@@ -6,7 +6,7 @@ export default function PrivatePage() {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        if (!token) return; // don't fetch if no token
+        if (!token) return;
 
         axios.get("http://localhost:8080/api/private", {
             headers: { Authorization: `Bearer ${token}` },
