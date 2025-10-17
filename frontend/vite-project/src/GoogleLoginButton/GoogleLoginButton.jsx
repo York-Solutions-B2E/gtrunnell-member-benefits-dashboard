@@ -5,15 +5,13 @@ import { jwtDecode } from "jwt-decode";
 function GoogleLoginButton() {
 
     useEffect(() => {
-        const initializeGoogle = () => {
-            const buttonDiv = document.getElementById("googleSignInDiv");
-            if (!buttonDiv) {
-                // Element not yet in DOM — try again shortly
-                setTimeout(initializeGoogle, 100);
-                return;
-            }
+        let isMounted = true;
 
-            if (window.google && window.google.accounts && window.google.accounts.id) {
+        const initializeGoogle = () => {
+            if (!isMounted) return;
+            const buttonDiv = document.getElementById("googleSignInDiv");
+            if (!buttonDiv) return setTimeout(initializeGoogle, 100);
+            if (window.google?.accounts?.id) {
                 window.google.accounts.id.initialize({
                     client_id: "491839525697-1ad0pir6k4fmvss8dn5m2qbjkecvso1e.apps.googleusercontent.com",
                     callback: handleCredentialResponse,
@@ -28,15 +26,24 @@ function GoogleLoginButton() {
         };
 
         initializeGoogle();
+
+        return () => { isMounted = false; };
     }, []);
 
-    const handleCredentialResponse = (response) => {
+    const handleCredentialResponse = async (response) => {
         console.log("Encoded JWT ID token:", response.credential);
-        const decoded = jwtDecode(response.credential);
-        console.log("Decoded token:", decoded);
-        localStorage.setItem("token", response.credential); // ✅ save token
-        window.location.href = "/private"; // ✅ redirect
+
+        await fetch("http://localhost:8080/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credential: response.credential }),
+            credentials: "include", // ✅ store the cookie
+        });
+
+        window.location.href = "/private";
     };
+
+
 
     return (
         <div style={{ marginTop: "2rem", textAlign: "center" }}>

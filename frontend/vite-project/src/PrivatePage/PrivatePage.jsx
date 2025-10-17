@@ -6,14 +6,13 @@ export default function PrivatePage() {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        if (!token) return; // don't fetch if no token
-
         axios.get("http://localhost:8080/api/private", {
-            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true, // ✅ send cookie automatically
         })
             .then(res => setData(res.data))
             .catch(err => console.error("Error fetching private message:", err));
-    }, [token]);
+    }, []);
+
 
     if (!token) return <p>Please log in first.</p>;
     if (!data) return <p>Loading...</p>;
