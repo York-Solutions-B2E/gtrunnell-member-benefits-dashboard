@@ -22,6 +22,10 @@ public class Member {
     @GeneratedValue
     private UUID id;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private String firstName;
 
     private String lastName;
