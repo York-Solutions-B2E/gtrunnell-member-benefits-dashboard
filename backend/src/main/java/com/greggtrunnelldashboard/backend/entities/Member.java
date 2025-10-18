@@ -23,7 +23,7 @@ public class Member {
     private UUID id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     private String firstName;
@@ -42,6 +42,8 @@ public class Member {
 //CascadeType.ALL If you save or delete a Member, its associated Enrollments are saved/deleted too.
 //orphanRemoval = true If you remove an enrollment from the list in Java and save, JPA deletes it in the DB.
 //Keeps things in sync.
+
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrollment> enrollments;
 
