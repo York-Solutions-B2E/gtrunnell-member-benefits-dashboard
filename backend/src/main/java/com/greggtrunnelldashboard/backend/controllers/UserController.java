@@ -1,5 +1,6 @@
 package com.greggtrunnelldashboard.backend.controllers;
 
+import com.greggtrunnelldashboard.backend.entities.Member;
 import com.greggtrunnelldashboard.backend.entities.User;
 import com.greggtrunnelldashboard.backend.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,17 @@ public class UserController {
     // POST → Create a new user manually (e.g., in Postman)
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.create(user);
+        User createdUser = userService.findOrCreateUserWithMember(
+                user.getAuthProvider(),
+                user.getAuthSub(),
+                user.getEmail()
+        );
         return ResponseEntity.ok(createdUser);
     }
 
-    // GET → List all users
-//    @GetMapping
-//    public List<User> getAllUsers() {
-//        return userService.getAll();
-//    }
+    @GetMapping
+    public List<User> findAll() {
+        return userService.getAllUsers();
+    }
 
 }
