@@ -1,6 +1,5 @@
 package com.greggtrunnelldashboard.backend.entities;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +22,10 @@ public class User {
     private UUID id;
 
     @Column(nullable = false)
-    private String authProvider; // e.g., "google", "okta"
+    private String authProvider;
 
     @Column(nullable = false, unique = true)
-    private String authSub; // OIDC subject, unique per provider
+    private String authSub;
 
     @Column(nullable = false)
     private String email;

@@ -18,17 +18,14 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    // Get all members
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
 
-    // Get one member by ID
     public Optional<Member> getMemberById(UUID id) {
         return memberRepository.findById(id);
     }
 
-    // Create or save a member
     public Member createMember(Member member) {
         return memberRepository.save(member);
     }

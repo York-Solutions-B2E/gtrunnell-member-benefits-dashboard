@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +22,8 @@ public class Member {
     private UUID id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+//will have to change nullable to false after testing
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     private String firstName;
@@ -37,7 +37,6 @@ public class Member {
     private String phone;
 
     private String mailingAddress;
-
 
 //CascadeType.ALL If you save or delete a Member, its associated Enrollments are saved/deleted too.
 //orphanRemoval = true If you remove an enrollment from the list in Java and save, JPA deletes it in the DB.
