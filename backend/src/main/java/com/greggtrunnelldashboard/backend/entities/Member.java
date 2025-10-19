@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -30,13 +31,14 @@ public class Member {
 
     private String lastName;
 
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     private String email;
 
     private String phone;
 
-    private String mailingAddress;
+    @Embedded
+    private Address mailingAddress;
 
 //CascadeType.ALL If you save or delete a Member, its associated Enrollments are saved/deleted too.
 //orphanRemoval = true If you remove an enrollment from the list in Java and save, JPA deletes it in the DB.
