@@ -20,17 +20,17 @@ public class UserService {
 
     public User findOrCreateUserWithMember(String authProvider, String authSub, String email) {
 
-        // Step 1: Find existing user
+
         return userRepository.findByAuthProviderAndAuthSub(authProvider, authSub)
                 .orElseGet(() -> {
-                    // Step 2: Create new user
+
                     User newUser = new User();
                     newUser.setAuthProvider(authProvider);
                     newUser.setAuthSub(authSub);
                     newUser.setEmail(email);
                     User savedUser = userRepository.save(newUser);
 
-                    // Step 3: Seed default Member data
+                    //for seeding member data
                     Member member = new Member();
                     member.setUser(savedUser);
                     member.setFirstName("Gregg");
