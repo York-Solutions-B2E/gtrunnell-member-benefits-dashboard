@@ -2,21 +2,17 @@ package com.greggtrunnelldashboard.backend.entities;
 
 import com.greggtrunnelldashboard.backend.enums.ClaimStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
     @Entity
-    @Table(name = "claim_status_events")
-    @Getter
-    @Setter
+    @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    @Table(name = "claim_status_events")
     public class ClaimStatusEvent {
 
         @Id
@@ -33,14 +29,6 @@ import java.util.UUID;
 
         private OffsetDateTime occurredAt;
 
-        private String note;
-
-        @PrePersist
-        public void setOccurredAtIfNull() {
-            if (this.occurredAt == null) {
-                this.occurredAt = OffsetDateTime.now();
-            }
-        }
     }
 
 

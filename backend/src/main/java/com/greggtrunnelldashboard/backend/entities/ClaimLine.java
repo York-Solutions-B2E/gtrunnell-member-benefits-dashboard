@@ -23,9 +23,9 @@ public class ClaimLine {
     private Claim claim;
 
     @Column(nullable = false)
-    private Integer lineNumber;  // sequential number (1..n within a claim)
+    private Integer lineNumber;
 
-    private String cptCode;      // procedure code (e.g. "99213")
+    private String cptCode;
     private String description;
 
     @Column(precision = 10, scale = 2)

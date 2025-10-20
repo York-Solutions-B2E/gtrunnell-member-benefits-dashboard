@@ -1,5 +1,6 @@
 package com.greggtrunnelldashboard.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.greggtrunnelldashboard.backend.enums.ClaimStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -52,9 +53,11 @@ public class Claim {
     private BigDecimal totalMemberResponsibility;
 
     @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ClaimLine> lines;
 
     @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ClaimStatusEvent> statusHistory;
 
     private OffsetDateTime updatedAt;
@@ -63,6 +66,15 @@ public class Claim {
     @PreUpdate
     public void updateTimestamp() {
         this.updatedAt = OffsetDateTime.now();
+    }
+    public void addStatusEvent(ClaimStatusEvent event) {
+        statusHistory.add(event);
+        event.setClaim(this);
+    }
+
+    public void addLine(ClaimLine line) {
+        lines.add(line);
+        line.setClaim(this);
     }
 
 }
