@@ -4,20 +4,20 @@ import com.greggtrunnelldashboard.backend.enums.AccumulatorType;
 import com.greggtrunnelldashboard.backend.enums.NetworkTier;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "accumulators")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Accumulator {
 
     @Id
-    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
 //a lot of accumulator(many) can be in one enrollment

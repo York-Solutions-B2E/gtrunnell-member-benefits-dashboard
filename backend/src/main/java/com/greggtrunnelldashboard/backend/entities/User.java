@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
     @Column(nullable = false)
@@ -33,14 +34,4 @@ public class User {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = OffsetDateTime.now();
-        this.updatedAt = this.createdAt;
-    }
-
-    @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = OffsetDateTime.now();
-    }
 }

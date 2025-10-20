@@ -1,29 +1,28 @@
 package com.greggtrunnelldashboard.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "members")
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
     @Id
-    @GeneratedValue
+    //using uuidgenerator and TIME it's ordered instead of random UUIDs. Avoids random UUID insert-order issues
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
     @OneToOne
-//will have to change nullable to false after testing
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private String firstName;
@@ -43,6 +42,9 @@ public class Member {
 //orphanRemoval = true If you remove an enrollment from the list in Java and save, JPA deletes it in the DB.
 //Keeps things in sync.
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Enrollment> enrollments;
+    // Prevents infinite JSON recursion when using @Data on bidirectional relationships.
+    // Marks this as the parent
+    @JsonManagedReference
+    private List<Enrollment> enrollments = new ArrayList<>();
 
 }
