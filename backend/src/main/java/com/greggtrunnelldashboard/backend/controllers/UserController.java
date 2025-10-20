@@ -1,14 +1,11 @@
 package com.greggtrunnelldashboard.backend.controllers;
 
-import com.greggtrunnelldashboard.backend.entities.Member;
 import com.greggtrunnelldashboard.backend.entities.User;
 import com.greggtrunnelldashboard.backend.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")

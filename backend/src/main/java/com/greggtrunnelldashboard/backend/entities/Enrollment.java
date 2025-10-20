@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -21,12 +21,17 @@ public class Enrollment {
     @GeneratedValue
     private UUID id;
 
-    private LocalDateTime coverageStart;
-    private LocalDateTime coverageEnd;
-    private Boolean active;
+    @ManyToOne
+    @JoinColumn(name="member_id", nullable = true)
+    private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")  // FK to members table
-    private Member member;
+    @JoinColumn(name = "plan_id", nullable = true)
+    private Plan plan;
+
+    private LocalDate coverageStart;
+    private LocalDate coverageEnd;
+    private Boolean active;
+
 }
 
