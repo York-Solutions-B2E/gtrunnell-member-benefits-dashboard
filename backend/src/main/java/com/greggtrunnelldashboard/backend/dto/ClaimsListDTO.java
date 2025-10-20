@@ -6,7 +6,7 @@ import com.greggtrunnelldashboard.backend.enums.ClaimStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record RecentClaimDTO(
+public record ClaimsListDTO(
         String claimNumber,
         LocalDate serviceStartDate,
         LocalDate serviceEndDate,
@@ -14,8 +14,9 @@ public record RecentClaimDTO(
         ClaimStatus status,
         BigDecimal memberResponsibility
 ) {
-    public static RecentClaimDTO from(Claim claim) {
-        return new RecentClaimDTO(
+    // Factory method to map from an entity
+    public static ClaimsListDTO from(Claim claim) {
+        return new ClaimsListDTO(
                 claim.getClaimNumber(),
                 claim.getServiceStartDate(),
                 claim.getServiceEndDate(),
@@ -25,4 +26,3 @@ public record RecentClaimDTO(
         );
     }
 }
-
