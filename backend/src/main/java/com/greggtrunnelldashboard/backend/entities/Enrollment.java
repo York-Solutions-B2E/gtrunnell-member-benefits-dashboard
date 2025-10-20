@@ -22,13 +22,13 @@ public class Enrollment {
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id", nullable = true)
 //this is the child of member. used to reduce risk of potential infinite loops
     @JsonBackReference
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = true)
     private Plan plan;
 

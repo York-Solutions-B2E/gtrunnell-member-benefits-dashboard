@@ -22,7 +22,7 @@ public class Accumulator {
     private UUID id;
 
 //a lot of accumulator(many) can be in one enrollment
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "enrollment_id", nullable = false)
     private Enrollment enrollment;

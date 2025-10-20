@@ -2,10 +2,7 @@ package com.greggtrunnelldashboard.backend.entities;
 
 import com.greggtrunnelldashboard.backend.enums.ClaimStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
@@ -15,25 +12,23 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "claims")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "claims")
 public class Claim {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
     private String claimNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 

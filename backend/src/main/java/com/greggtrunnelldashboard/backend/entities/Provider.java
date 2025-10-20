@@ -1,20 +1,15 @@
 package com.greggtrunnelldashboard.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "providers")
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@Table(name = "providers")
 public class Provider {
 
     @Id
@@ -23,6 +18,9 @@ public class Provider {
 
     private String providerName;
     private String providerSpeciality;
+
+    @Embedded
     private Address address;
+
     private String providerPhone;
 }

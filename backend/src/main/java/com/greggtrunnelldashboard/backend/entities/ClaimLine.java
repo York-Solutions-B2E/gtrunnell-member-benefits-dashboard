@@ -1,28 +1,24 @@
 package com.greggtrunnelldashboard.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "claim_lines")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "claim_lines")
 public class ClaimLine {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "claim_id", nullable = false)
     private Claim claim;
 

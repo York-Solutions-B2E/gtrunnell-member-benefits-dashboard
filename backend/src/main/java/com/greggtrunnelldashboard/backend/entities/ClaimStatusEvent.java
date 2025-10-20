@@ -23,7 +23,7 @@ import java.util.UUID;
         @UuidGenerator(style = UuidGenerator.Style.TIME)
         private UUID id;
 
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "claim_id", nullable = false)
         private Claim claim;
 
