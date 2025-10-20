@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "members")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "members")
 public class Member {
     @Id
     //using uuidgenerator and TIME it's ordered instead of random UUIDs. Avoids random UUID insert-order issues

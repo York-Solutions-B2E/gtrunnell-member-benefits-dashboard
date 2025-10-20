@@ -2,19 +2,14 @@ package com.greggtrunnelldashboard.backend.entities;
 
 import com.greggtrunnelldashboard.backend.enums.PlanType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name="plans")
 public class Plan {
     @Id

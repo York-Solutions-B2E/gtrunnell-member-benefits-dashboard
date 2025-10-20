@@ -1,5 +1,6 @@
 package com.greggtrunnelldashboard.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greggtrunnelldashboard.backend.enums.AccumulatorType;
 import com.greggtrunnelldashboard.backend.enums.NetworkTier;
 import jakarta.persistence.*;
@@ -10,10 +11,10 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "accumulators")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "accumulators")
 public class Accumulator {
 
     @Id
@@ -22,6 +23,7 @@ public class Accumulator {
 
 //a lot of accumulator(many) can be in one enrollment
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "enrollment_id", nullable = false)
     private Enrollment enrollment;
 
