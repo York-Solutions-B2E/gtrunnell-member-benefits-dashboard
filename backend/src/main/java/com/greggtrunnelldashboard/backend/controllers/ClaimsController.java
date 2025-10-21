@@ -10,6 +10,7 @@ import com.greggtrunnelldashboard.backend.repositories.ClaimRepository;
 import com.greggtrunnelldashboard.backend.repositories.MemberRepository;
 import com.greggtrunnelldashboard.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/claims")
 @RequiredArgsConstructor
@@ -65,11 +67,21 @@ public class ClaimsController {
                 // silently ignore invalid filters
             }
         }
+        String providerStr = (provider != null) ? new String(provider.getBytes()) : null;
 
         // 🧩 Run query
         PageRequest pageable = PageRequest.of(page, size, Sort.by("receivedDate").descending());
-        Page<Claim> claims = claimRepository.findFiltered(
-                member.getId(), claimStatus, provider, claimNumber, pageable);
+        log.info("Fetching claims for memberId={} | status={} | provider={} | claimNumber={}",
+                member.getId(), claimStatus, provider, claimNumber);
+
+        Page<Claim> claims;
+        try {
+            claims = claimRepository.findFiltered(
+                    member.getId(), claimStatus, provider, claimNumber, pageable);
+        } catch (Exception e) {
+            log.error("🔥 Error fetching claims: {}", e.getMessage(), e);
+            throw e; // rethrow so Spring still returns 500
+        }
 
         // 🧩 Map to DTOs
         Page<ClaimsListDTO> dtoPage = claims.map(ClaimsListDTO::from);
