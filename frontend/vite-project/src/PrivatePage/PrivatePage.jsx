@@ -8,11 +8,11 @@ export default function PrivatePage() {
     useEffect(() => {
         if (!token) return;
 
-        axios.get("http://localhost:8080/api/private", {
+        axios.get("http://localhost:8080/api/dashboard", {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then(res => setData(res.data))
-            .catch(err => console.error("Error fetching private message:", err));
+            .catch(err => console.error("Error fetching dashboard:", err));
     }, [token]);
 
     if (!token) return <p>Please log in first.</p>;
@@ -20,10 +20,7 @@ export default function PrivatePage() {
 
     return (
         <div>
-            <h2>{data.message}</h2>
-            <p><strong>Email:</strong> {data.email}</p>
-            <p><strong>Sub:</strong> {data.sub}</p>
-            <p><strong>Issuer:</strong> {data.issuer}</p>
+            <p>{JSON.stringify(data, null, 2)}</p>
         </div>
     );
 }
