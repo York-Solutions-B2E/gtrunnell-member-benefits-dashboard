@@ -34,7 +34,7 @@ function GoogleLoginButton() {
         const decoded = jwtDecode(response.credential);
         console.log("Decoded token:", decoded);
         localStorage.setItem("token", response.credential);
-        window.location.href = "/private";
+        window.location.href = "/dashboard";
     };
 
     return (
