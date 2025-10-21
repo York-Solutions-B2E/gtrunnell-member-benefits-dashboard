@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ClaimRepository extends JpaRepository<Claim, UUID> {
+    List<Claim> findTop5ByMemberIdOrderByReceivedDateDesc(UUID memberId);
     Optional<Claim> findByClaimNumber(String claimNumber);
     List<Claim> findByMemberId(UUID memberId);
+
 }
