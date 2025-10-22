@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+//using useNavigate here so data persists when going to ClaimDetailPage
 import { useNavigate} from "react-router-dom";
 
 import axios from "axios";
@@ -37,15 +38,11 @@ export default function ClaimsListPage() {
         <div>
             <h1>Claims</h1>
             <hr />
-
-            {/* Filters section (placeholder for now) */}
             <div>
+                {/*placeholder*/}
                 <p>Filters: [Status] [Date Range] [Provider] [Claim #] (Search)</p>
             </div>
-
             <hr />
-
-            {/* Claims Table */}
             {claims.length === 0 ? (
                 <p>No claims found.</p>
             ) : (
@@ -84,11 +81,9 @@ export default function ClaimsListPage() {
                     </tbody>
                 </table>
             )}
-
             <hr />
-
-            {/* Pagination placeholder */}
             <div>
+                {/*placeholder*/}
                 <p>Page 1 of X [10 v] per page ◂ Prev 1 2 3 ... Next ▸</p>
             </div>
         </div>

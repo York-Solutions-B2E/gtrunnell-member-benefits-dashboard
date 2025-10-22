@@ -39,11 +39,16 @@ export default function DashboardPage() {
         return `[${"=".repeat(filled)}${"-".repeat(empty)}]`;
     };
 
+    const handleSignOut = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/"; // Forces a fresh page load
+    };
+
     return (
         <div>
             <h1>Dashboard</h1>
             <div>
-                <span>{fullName}</span> | <button onClick={() => localStorage.removeItem("token")}>Sign out</button>
+                <span>{fullName}</span> | <button onClick={handleSignOut}>Sign out</button>
             </div>
             <hr />
             <section>
