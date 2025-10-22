@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ClaimRepository extends JpaRepository<Claim, UUID> {
@@ -28,6 +29,6 @@ public interface ClaimRepository extends JpaRepository<Claim, UUID> {
             @Param("claimNumber") String claimNumber,
             Pageable pageable
     );
-
     List<Claim> findTop5ByMemberIdOrderByReceivedDateDesc(UUID memberId);
+    Optional<Claim> findByClaimNumber(String claimNumber);
 }

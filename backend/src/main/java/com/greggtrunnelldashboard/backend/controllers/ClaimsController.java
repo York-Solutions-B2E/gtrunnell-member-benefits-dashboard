@@ -87,4 +87,32 @@ public class ClaimsController {
         Page<ClaimsListDTO> dtoPage = claims.map(ClaimsListDTO::from);
         return ResponseEntity.ok(dtoPage);
     }
+    @GetMapping("/{claimNumber}")
+    public ResponseEntity<?> getClaimDetail(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable String claimNumber
+    ) {
+        log.info("Fetching claim detail for claimNumber={}", claimNumber);
+
+        String sub = jwt.getClaim("sub");
+        String providerId = jwt.getClaimAsString("iss");
+
+        User user = userRepository.findByAuthProviderAndAuthSub(providerId, sub)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Member member = memberRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Member not found"));
+
+        Claim claim = claimRepository.findByClaimNumber(claimNumber)
+                .orElseThrow(() -> new RuntimeException("Claim not found: " + claimNumber));
+
+        // Security check — ensure this claim belongs to this member
+        if (!claim.getMember().getId().equals(member.getId())) {
+            log.warn("Unauthorized access: member {} tried to access claim {}", member.getId(), claimNumber);
+            return ResponseEntity.status(403).body("You are not allowed to view this claim.");
+        }
+
+        // Return a lightweight DTO (next step)
+        return ResponseEntity.ok(com.greggtrunnelldashboard.backend.dto.ClaimDetailDTO.from(claim));
+    }
+
 }
