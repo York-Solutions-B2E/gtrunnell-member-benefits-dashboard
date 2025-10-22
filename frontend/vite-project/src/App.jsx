@@ -3,9 +3,9 @@ import './App.css'
 import GoogleLoginButton from "./GoogleLoginButton/GoogleLoginButton.jsx";
 import { Routes, Route } from "react-router-dom";
 import DashboardPage from "./DashboardPage/DashboardPage.jsx";
-import ClaimsPage from "./ClaimsPage/ClaimsPage.jsx";
 import Nav from "./Nav/Nav.jsx";
 import Header from "./Header/Header.jsx";
+import ClaimsListPage from "./ClaimsListPage/ClaimsListPage.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,7 +17,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<GoogleLoginButton />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/claims" element={<ClaimsPage />} />
+                <Route path="/claims" element={<ClaimsListPage />} />
             </Routes>
     </>
   )
