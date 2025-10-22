@@ -18,10 +18,12 @@ public interface ClaimRepository extends JpaRepository<Claim, UUID> {
     SELECT c FROM Claim c
     WHERE c.member.id = :memberId
       AND (:status IS NULL OR c.status = :status)
-      AND (:provider IS NULL OR c.provider.providerName LIKE CONCAT('%', :provider, '%'))
+      AND (:provider IS NULL OR
+           CAST(LOWER(c.provider.providerName) AS string) LIKE
+           LOWER(CAST(CONCAT('%', :provider, '%') AS string)))
       AND (:claimNumber IS NULL OR c.claimNumber = :claimNumber)
-    ORDER BY c.receivedDate DESC
     """)
+
     Page<Claim> findFiltered(
             @Param("memberId") UUID memberId,
             @Param("status") ClaimStatus status,
