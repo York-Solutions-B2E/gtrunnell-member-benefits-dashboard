@@ -6,6 +6,7 @@ import DashboardPage from "./DashboardPage/DashboardPage.jsx";
 import Nav from "./Nav/Nav.jsx";
 import Header from "./Header/Header.jsx";
 import ClaimsListPage from "./ClaimsListPage/ClaimsListPage.jsx";
+import ClaimDetailPage from "./ClaimDetailPage/ClaimDetailPage.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/" element={<GoogleLoginButton />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/claims" element={<ClaimsListPage />} />
+                <Route path="/claims/:claimNumber" element={<ClaimDetailPage />} />
             </Routes>
     </>
   )

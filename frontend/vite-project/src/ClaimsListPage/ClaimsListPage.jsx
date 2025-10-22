@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate} from "react-router-dom";
+
 import axios from "axios";
 
 export default function ClaimsListPage() {
@@ -6,6 +8,7 @@ export default function ClaimsListPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!token) return;
@@ -70,7 +73,7 @@ export default function ClaimsListPage() {
                             <td>
                                 <button
                                     onClick={() =>
-                                        (window.location.href = `/claims/${claim.claimNumber}`)
+                                        navigate(`/claims/${claim.claimNumber}`)
                                     }
                                 >
                                     View ▸
