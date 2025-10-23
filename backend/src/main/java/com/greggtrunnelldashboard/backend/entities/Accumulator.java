@@ -21,7 +21,7 @@ public class Accumulator {
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
-//a lot of accumulator(many) can be in one enrollment
+//a lot of accumulators(many) can be in one enrollment
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "enrollment_id", nullable = false)
