@@ -12,16 +12,18 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-[#B7E23F] via-[#CCFF00] to-[#E8FFC7]">
         <Header />
         <Nav />
+        <div>
             <Routes>
                 <Route path="/" element={<GoogleLoginButton />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/claims" element={<ClaimsListPage />} />
                 <Route path="/claims/:claimNumber" element={<ClaimDetailPage />} />
             </Routes>
-    </>
+        </div>
+    </div>
   )
 }
 

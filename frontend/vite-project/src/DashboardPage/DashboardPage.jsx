@@ -21,7 +21,6 @@ export default function DashboardPage() {
 
     const {
         fullName,
-        email,
         planName,
         networkName,
         planYear,

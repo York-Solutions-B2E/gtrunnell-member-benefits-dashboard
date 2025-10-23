@@ -3,7 +3,7 @@ function Header() {
 
     return (
         <div className="Header">
-            <h1>Member Benefits Dashboard</h1>
+            <p className="text-3xl font-bold text-sky-500 underline">Member Benefits Dashboard</p>
         </div>
     );
 }

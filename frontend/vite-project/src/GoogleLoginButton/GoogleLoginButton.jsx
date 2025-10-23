@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
+
 function GoogleLoginButton() {
 
     useEffect(() => {
@@ -39,8 +40,11 @@ function GoogleLoginButton() {
 
     return (
         <div style={{ marginTop: "2rem", textAlign: "center" }}>
-            <h2>Login with Google</h2>
-            <div id="googleSignInDiv"></div>
+            <div id="googleSignInDiv"      style={{
+                display: "inline-block",
+                width: "250px",   // 👈 adjust this number
+                height: "45px",   // optional — helps sizing consistency
+            }}></div>
         </div>
     );
 }

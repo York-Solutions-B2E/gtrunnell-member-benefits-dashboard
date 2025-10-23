@@ -5,9 +5,9 @@ function Nav() {
     return (
         <nav className="Nav">
             <div style={{ display: "flex", gap: "1rem" }}>
-            <NavLink to="/">Login</NavLink>
-            <NavLink to="/dashboard">Dashboard</NavLink>
-            <NavLink to="/claims">Claims</NavLink>
+            <NavLink className="bg-sky-300 hover:bg-sky-500 text-white p-1 rounded" to="/">Login</NavLink>
+            <NavLink className="bg-sky-300 hover:bg-sky-500 text-white p-1 rounded" to="/dashboard">Dashboard</NavLink>
+            <NavLink className="bg-sky-300 hover:bg-sky-500 text-white p-1 rounded" to="/claims">Claims</NavLink>
             </div>
         </nav>
     );
