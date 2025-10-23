@@ -39,13 +39,12 @@ public class ClaimsController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        // 🧩 Extract user identity
+
         String email = jwt.getClaim("email");
         String name = jwt.getClaim("name");
         String sub = jwt.getClaim("sub");
         String providerId = jwt.getClaimAsString("iss");
 
-        // 🧩 Find or create user + member
         User user = userRepository.findByAuthProviderAndAuthSub(providerId, sub)
                 .orElseGet(() -> {
                     User newUser = new User();
@@ -58,18 +57,15 @@ public class ClaimsController {
         Member member = memberRepository.findByUser(user)
                 .orElseGet(() -> seedData.createMember(user, name));
 
-        // 🧩 Convert status to enum (safe)
         ClaimStatus claimStatus = null;
         if (status != null && !status.isBlank()) {
             try {
                 claimStatus = ClaimStatus.valueOf(status.toUpperCase());
             } catch (IllegalArgumentException ignored) {
-                // silently ignore invalid filters
             }
         }
         String providerStr = (provider != null) ? new String(provider.getBytes()) : null;
 
-        // 🧩 Run query
         PageRequest pageable = PageRequest.of(page, size, Sort.by("receivedDate").descending());
         log.info("Fetching claims for memberId={} | status={} | provider={} | claimNumber={}",
                 member.getId(), claimStatus, provider, claimNumber);
@@ -83,7 +79,6 @@ public class ClaimsController {
             throw e; // rethrow so Spring still returns 500
         }
 
-        // 🧩 Map to DTOs
         Page<ClaimsListDTO> dtoPage = claims.map(ClaimsListDTO::from);
         return ResponseEntity.ok(dtoPage);
     }
@@ -105,13 +100,11 @@ public class ClaimsController {
         Claim claim = claimRepository.findByClaimNumber(claimNumber)
                 .orElseThrow(() -> new RuntimeException("Claim not found: " + claimNumber));
 
-        // Security check — ensure this claim belongs to this member
         if (!claim.getMember().getId().equals(member.getId())) {
             log.warn("Unauthorized access: member {} tried to access claim {}", member.getId(), claimNumber);
             return ResponseEntity.status(403).body("You are not allowed to view this claim.");
         }
 
-        // Return a lightweight DTO (next step)
         return ResponseEntity.ok(com.greggtrunnelldashboard.backend.dto.ClaimDetailDTO.from(claim));
     }
 

@@ -25,13 +25,12 @@ public class DashboardController {
 
     @GetMapping
     public ResponseEntity<MemberDTO> getDashboard(@AuthenticationPrincipal Jwt jwt) {
-        // 1️⃣ Extract OIDC info from token
+        //  extracts OIDC info from token
         String email = jwt.getClaim("email");
         String name = jwt.getClaim("name");
         String sub = jwt.getClaim("sub");
         String provider = jwt.getClaimAsString("iss"); // issuer (e.g. Google)
 
-        // 2️⃣ Find or create User
         User user = userRepository.findByAuthProviderAndAuthSub(provider, sub)
                 .orElseGet(() -> {
                     User newUser = new User();
@@ -41,11 +40,11 @@ public class DashboardController {
                     return userRepository.save(newUser);
                 });
 
-        // 3️⃣ Find or create Member (auto-seed if new)
+        //create Member
         Member member = memberRepository.findByUser(user)
                 .orElseGet(() -> seedData.createMember(user, name));
 
-        // Build and return the MemberDTO (the Dashboard view)
+        // build and return the MemberDTO
         MemberDTO dto = dashboardService.buildDashboardForMember(member);
         return ResponseEntity.ok(dto);
     }

@@ -17,11 +17,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()  // open endpoints (like /auth/me if needed)
-                        .anyRequest().authenticated()                 // everything else requires JWT
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 )
 
-                // Use Spring as a pure OAuth2 Resource Server (JWT token validation)
+                // OAuth2 Resource Server validates JWT token
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
