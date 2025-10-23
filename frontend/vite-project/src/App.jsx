@@ -12,7 +12,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#B7E23F] via-[#CCFF00] to-[#E8FFC7]">
+    <div className="min-h-screen bg-gradient-to-br from-white to-[#B7E23F]">
         <Header />
         <Nav />
         <div>

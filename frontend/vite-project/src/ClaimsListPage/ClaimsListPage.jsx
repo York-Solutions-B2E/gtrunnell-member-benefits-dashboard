@@ -34,47 +34,80 @@ export default function ClaimsListPage() {
     if (loading) return <p>Loading claims...</p>;
     if (error) return <p>Error loading claims.</p>;
 
+
     return (
-        <div>
-            <h1>Claims</h1>
-            <hr />
+        <div className="p-6">
+            <header className="flex items-center justify-between mb-6">
+                <h1 className="text-3xl font-bold text-sky-600">Claims</h1>
+            </header>
+
             {claims.length === 0 ? (
-                <p>No claims found.</p>
+                <p className="text-gray-600 italic">No claims found.</p>
             ) : (
-                <table border="1" cellPadding="4" cellSpacing="0">
-                    <thead>
-                    <tr>
-                        <th>Claim #</th>
-                        <th>Service Dates</th>
-                        <th>Provider</th>
-                        <th>Status</th>
-                        <th>Member Responsibility</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {claims.map((claim) => (
-                        <tr key={claim.claimNumber}>
-                            <td>{claim.claimNumber}</td>
-                            <td>
-                                {claim.serviceStartDate} – {claim.serviceEndDate}
-                            </td>
-                            <td>{claim.providerName}</td>
-                            <td>{claim.status}</td>
-                            <td>${claim.memberResponsibility?.toFixed(2) ?? "—"}</td>
-                            <td>
-                                <button
-                                    onClick={() =>
-                                        navigate(`/claims/${claim.claimNumber}`)
-                                    }
-                                >
-                                    View ▸
-                                </button>
-                            </td>
+                <div className="overflow-x-auto bg-white rounded-2xl shadow-sm border border-gray-200">
+                    <table className="min-w-full text-sm text-left text-gray-700">
+                        <thead className="bg-sky-100 text-gray-700 uppercase text-xs font-semibold">
+                        <tr>
+                            <th className="px-4 py-3">Claim #</th>
+                            <th className="px-4 py-3">Service Dates</th>
+                            <th className="px-4 py-3">Provider</th>
+                            <th className="px-4 py-3">Status</th>
+                            <th className="px-4 py-3 text-right">Member Responsibility</th>
+                            <th className="px-4 py-3 text-center">Action</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {claims.map((claim) => {
+                            const statusColors = {
+                                DENIED: "text-red-500",
+                                PROCESSED: "text-yellow-500",
+                                IN_REVIEW: "text-yellow-500",
+                                PAID: "text-green-600",
+                            };
+
+                            return (
+                                <tr
+                                    key={claim.claimNumber}
+                                    className="border-b border-gray-200 hover:bg-sky-50 transition"
+                                >
+                                    <td className="px-4 py-3 font-medium text-gray-800">
+                                        {claim.claimNumber}
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-600">
+                                        {claim.serviceStartDate} – {claim.serviceEndDate}
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-700">
+                                        {claim.providerName}
+                                    </td>
+                                    <td
+                                        className={`px-4 py-3 font-semibold ${
+                                            statusColors[claim.status] || "text-gray-600"
+                                        }`}
+                                    >
+                                        {claim.status.replace("_", " ")}
+                                    </td>
+                                    <td className="px-4 py-3 text-right text-gray-700">
+                                        $
+                                        {claim.memberResponsibility != null
+                                            ? claim.memberResponsibility.toFixed(2)
+                                            : "—"}
+                                    </td>
+                                    <td className="px-4 py-3 text-center">
+                                        <button
+                                            onClick={() =>
+                                                navigate(`/claims/${claim.claimNumber}`)
+                                            }
+                                            className="text-sky-600 hover:text-sky-800 font-medium hover:underline transition cursor-pointer"
+                                        >
+                                            View ▸
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
