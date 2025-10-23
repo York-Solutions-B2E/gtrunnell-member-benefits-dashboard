@@ -38,11 +38,6 @@ export default function ClaimsListPage() {
         <div>
             <h1>Claims</h1>
             <hr />
-            <div>
-                {/*placeholder*/}
-                <p>Filters: [Status] [Date Range] [Provider] [Claim #] (Search)</p>
-            </div>
-            <hr />
             {claims.length === 0 ? (
                 <p>No claims found.</p>
             ) : (
@@ -81,11 +76,6 @@ export default function ClaimsListPage() {
                     </tbody>
                 </table>
             )}
-            <hr />
-            <div>
-                {/*placeholder*/}
-                <p>Page 1 of X [10 v] per page ◂ Prev 1 2 3 ... Next ▸</p>
-            </div>
         </div>
     );
 }

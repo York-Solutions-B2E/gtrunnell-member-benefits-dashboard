@@ -21,9 +21,6 @@ public class DashboardController {
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
     private final DashboardService dashboardService;
-//    private final EnrollmentRepository enrollmentRepository;
-//    private final AccumulatorRepository accumulatorRepository;
-//    private final ClaimRepository claimRepository;
     private final SeedData seedData;
 
     @GetMapping
@@ -47,17 +44,6 @@ public class DashboardController {
         // 3️⃣ Find or create Member (auto-seed if new)
         Member member = memberRepository.findByUser(user)
                 .orElseGet(() -> seedData.createMember(user, name));
-
-//        // 4️⃣ Load related data
-//        Enrollment enrollment = enrollmentRepository.findFirstByMemberAndActiveTrue(member)
-//                .orElseThrow(() -> new IllegalStateException("No active enrollment found"));
-//        List<Accumulator> accumulators = accumulatorRepository.findByEnrollmentId(enrollment.getId());
-//        List<Claim> claims = claimRepository.findTop5ByMemberIdOrderByReceivedDateDesc(member.getId());
-//
-//        // 5️⃣ Assemble DTO
-//        MemberDTO dto = new MemberDTO(member, enrollment, accumulators, claims);
-//        return ResponseEntity.ok(dto);
-//    }
 
         // Build and return the MemberDTO (the Dashboard view)
         MemberDTO dto = dashboardService.buildDashboardForMember(member);
