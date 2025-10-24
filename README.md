@@ -53,6 +53,10 @@ gt-member-benefits-dashboard/
 ├── docker-compose.yml  
 └── README.md
 
+  
+---  
+
+
 ---
 
 ## ⚙️ Installation & Setup
@@ -65,12 +69,12 @@ gt-member-benefits-dashboard/
 
 ---
 
-##### 2️⃣  Clone the repository
+#### 2️⃣  Clone the repository
 
 git clone https://github.com/York-Solutions-B2E/gtrunnell-member-benefits-dashboard.git
 cd gt-member-benefits-dashboard
 
-##### 3️⃣ Start the Database with Docker
+#### 3️⃣ Start the Database with Docker
  ```
  docker-compose up -d
 
@@ -78,7 +82,7 @@ cd gt-member-benefits-dashboard
 
 This launches a local PostgreSQL instance named **memberdb** on port **5432**.
 
-##### 4️⃣ Run the Backend
+#### 4️⃣ Run the Backend
 ```
 cd backend
 ./mvnw spring-boot:run
@@ -88,7 +92,7 @@ The backend starts on **[http://localhost:8080](http://localhost:8080)**.
 It connects automatically to the Docker Postgres container
 
 
-##### 5️⃣ Run the Frontend
+#### 5️⃣ Run the Frontend
 ```
 cd frontend/vite-project
 npm install
@@ -97,7 +101,7 @@ npm run dev
 ``` 
 Frontend runs on http://localhost:5173.
 
-##### 6️⃣ Login & Seed Data
+#### 6️⃣ Login & Seed Data
 
 - On first sign-in with Google, the backend’s `SeedData` component will automatically initialize sample **member**, **provider**, **plan**, and **claims** data for that user.
 - After authentication, you’ll be redirected to the dashboard showing **accumulators** and **claims list**.
