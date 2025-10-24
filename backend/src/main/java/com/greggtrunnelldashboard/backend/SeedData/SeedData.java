@@ -64,7 +64,7 @@ public class SeedData {
         oop.setType(AccumulatorType.OOP_MAX);
         oop.setTier(NetworkTier.IN_NETWORK);
         oop.setLimitAmount(BigDecimal.valueOf(6000));
-        oop.setUsedAmount(BigDecimal.valueOf(1200));
+        oop.setUsedAmount(BigDecimal.valueOf(2000));
 
         accumulatorRepository.saveAll(List.of(deductible, oop));
 

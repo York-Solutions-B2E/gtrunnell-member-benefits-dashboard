@@ -121,7 +121,7 @@ export default function ClaimDetailPage() {
             <div>
                 <button
                     onClick={() => window.history.back()}
-                    className="text-sky-600 hover:text-sky-800 font-medium transition"
+                    className="text-sky-600 hover:text-sky-800 font-medium transition cursor-pointer"
                 >
                     ← Back to Claims
                 </button>

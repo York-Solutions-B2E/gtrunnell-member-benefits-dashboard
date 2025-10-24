@@ -109,7 +109,7 @@ export default function DashboardPage() {
                                 className="border-b border-gray-200 hover:bg-sky-50 transition"
                             >
                                 <td className="py-2">{claim.claimNumber}</td>
-                                <td className="py-2">{claim.serviceDates}</td>
+                                <td className="py-2">{claim.serviceStartDate} – {claim.serviceEndDate}</td>
                                 <td className="py-2">{claim.providerName}</td>
                                 <td
                                     className={`py-2 font-medium ${
