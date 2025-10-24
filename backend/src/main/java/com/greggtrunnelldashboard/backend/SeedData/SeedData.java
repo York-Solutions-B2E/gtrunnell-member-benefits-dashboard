@@ -84,30 +84,63 @@ public class SeedData {
         primeHospital.setProviderSpeciality("Inpatient Facility");
         providerRepository.save(primeHospital);
 
-        // 6️⃣ Claims
+        Provider dentalArts = new Provider();
+        dentalArts.setProviderName("Dental Arts Studio");
+        dentalArts.setProviderSpeciality("Dentistry");
+        providerRepository.save(dentalArts);
+
+        Provider urgentCare = new Provider();
+        urgentCare.setProviderName("Metro Urgent Care");
+        urgentCare.setProviderSpeciality("Emergency Medicine");
+        providerRepository.save(urgentCare);
+
+        Provider eyeClinic = new Provider();
+        eyeClinic.setProviderName("Vision Plus Eye Clinic");
+        eyeClinic.setProviderSpeciality("Optometry");
+        providerRepository.save(eyeClinic);
+
+        // 6️⃣ Claims (8 total)
         Claim claim1 = buildClaim(member, riverClinic, "C-10421",
                 LocalDate.of(2025, 8, 29), LocalDate.of(2025, 8, 29),
                 LocalDate.of(2025, 9, 2), ClaimStatus.PROCESSED,
                 300, 200, 155, 45);
-        claimRepository.save(claim1);
 
         Claim claim2 = buildClaim(member, cityImaging, "C-10405",
                 LocalDate.of(2025, 8, 20), LocalDate.of(2025, 8, 20),
                 LocalDate.of(2025, 8, 22), ClaimStatus.DENIED,
                 180, 0, 0, 0);
-        claimRepository.save(claim2);
 
         Claim claim3 = buildClaim(member, primeHospital, "C-10398",
                 LocalDate.of(2025, 8, 9), LocalDate.of(2025, 8, 9),
                 LocalDate.of(2025, 8, 12), ClaimStatus.PAID,
                 900, 700, 580, 120);
-        claimRepository.save(claim3);
 
         Claim claim4 = buildClaim(member, riverClinic, "C-10375",
                 LocalDate.of(2025, 7, 31), LocalDate.of(2025, 7, 31),
                 LocalDate.of(2025, 8, 3), ClaimStatus.IN_REVIEW,
                 250, 0, 0, 0);
-        claimRepository.save(claim4);
+
+        Claim claim5 = buildClaim(member, dentalArts, "C-10350",
+                LocalDate.of(2025, 7, 15), LocalDate.of(2025, 7, 15),
+                LocalDate.of(2025, 7, 18), ClaimStatus.PAID,
+                400, 300, 240, 60);
+
+        Claim claim6 = buildClaim(member, urgentCare, "C-10329",
+                LocalDate.of(2025, 6, 29), LocalDate.of(2025, 6, 29),
+                LocalDate.of(2025, 7, 1), ClaimStatus.PROCESSED,
+                550, 400, 310, 90);
+
+        Claim claim7 = buildClaim(member, eyeClinic, "C-10308",
+                LocalDate.of(2025, 6, 10), LocalDate.of(2025, 6, 10),
+                LocalDate.of(2025, 6, 12), ClaimStatus.PAID,
+                220, 180, 140, 40);
+
+        Claim claim8 = buildClaim(member, cityImaging, "C-10297",
+                LocalDate.of(2025, 5, 20), LocalDate.of(2025, 5, 20),
+                LocalDate.of(2025, 5, 23), ClaimStatus.DENIED,
+                300, 0, 0, 0);
+
+        claimRepository.saveAll(List.of(claim1, claim2, claim3, claim4, claim5, claim6, claim7, claim8));
 
         // 7️⃣ Claim Lines
         addClaimLines(claim1, List.of(
@@ -126,6 +159,23 @@ public class SeedData {
 
         addClaimLines(claim4, List.of(
                 new ClaimLineSpec("87086", "Urine Culture", 250, 0, 0, 0, 0, 0)
+        ));
+
+        addClaimLines(claim5, List.of(
+                new ClaimLineSpec("11110", "Dental Cleaning", 200, 150, 20, 0, 120, 30),
+                new ClaimLineSpec("12001", "Cavity Filling", 200, 150, 20, 0, 120, 30)
+        ));
+
+        addClaimLines(claim6, List.of(
+                new ClaimLineSpec("99214", "Urgent Care Visit", 550, 400, 40, 50, 310, 90)
+        ));
+
+        addClaimLines(claim7, List.of(
+                new ClaimLineSpec("92014", "Comprehensive Eye Exam", 220, 180, 30, 10, 140, 40)
+        ));
+
+        addClaimLines(claim8, List.of(
+                new ClaimLineSpec("70030", "CT Scan, Head", 300, 0, 0, 0, 0, 0)
         ));
 
         return member;
@@ -152,12 +202,12 @@ public class SeedData {
         return claim;
     }
 
-    // 🧩 Helper class to describe a claim line
+    // 🧩 Helper record for claim lines
     private record ClaimLineSpec(String cpt, String desc, double billed, double allowed,
                                  double copay, double coins, double planPaid, double memberResp) {
     }
 
-    // 🧩 Helper to add lines
+    // 🧩 Helper to add claim lines
     private void addClaimLines(Claim claim, List<ClaimLineSpec> specs) {
         int lineNumber = 1;
         for (ClaimLineSpec s : specs) {

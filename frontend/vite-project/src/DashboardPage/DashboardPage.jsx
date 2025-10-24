@@ -31,16 +31,9 @@ export default function DashboardPage() {
         recentClaims,
     } = data;
 
-    const progressBar = (used, limit) => {
-        const percent = Math.min(used / limit, 1);
-        const filled = Math.round(percent * 10);
-        const empty = 10 - filled;
-        return `[${"=".repeat(filled)}${"-".repeat(empty)}]`;
-    };
-
     const handleSignOut = () => {
         localStorage.removeItem("token");
-        window.location.href = "/"; // Forces a fresh page load
+        window.location.href = "/";
     };
 
     return (
@@ -141,7 +134,6 @@ export default function DashboardPage() {
                 )}
             </section>
 
-            {/* FOOTER */}
             <div className="flex justify-end mt-6">
                 <button
                     className="bg-sky-400 hover:bg-sky-600 text-white font-medium px-4 py-2 rounded cursor-pointer transition"
