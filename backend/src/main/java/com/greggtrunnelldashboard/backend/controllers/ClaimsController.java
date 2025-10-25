@@ -1,19 +1,13 @@
 package com.greggtrunnelldashboard.backend.controllers;
 
-import com.greggtrunnelldashboard.backend.SeedData.SeedData;
+import com.greggtrunnelldashboard.backend.dto.ClaimDetailDTO;
 import com.greggtrunnelldashboard.backend.dto.ClaimsListDTO;
-import com.greggtrunnelldashboard.backend.entities.Claim;
 import com.greggtrunnelldashboard.backend.entities.Member;
-import com.greggtrunnelldashboard.backend.entities.User;
-import com.greggtrunnelldashboard.backend.enums.ClaimStatus;
-import com.greggtrunnelldashboard.backend.repositories.ClaimRepository;
-import com.greggtrunnelldashboard.backend.repositories.MemberRepository;
-import com.greggtrunnelldashboard.backend.repositories.UserRepository;
+import com.greggtrunnelldashboard.backend.services.AuthService;
+import com.greggtrunnelldashboard.backend.services.ClaimService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -25,10 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ClaimsController {
 
-    private final ClaimRepository claimRepository;
-    private final MemberRepository memberRepository;
-    private final UserRepository userRepository;
-    private final SeedData seedData;
+    private final AuthService authService;
+    private final ClaimService claimService;
 
     @GetMapping
     public ResponseEntity<Page<ClaimsListDTO>> getClaims(
@@ -39,73 +31,18 @@ public class ClaimsController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-
-        String email = jwt.getClaim("email");
-        String name = jwt.getClaim("name");
-        String sub = jwt.getClaim("sub");
-        String providerId = jwt.getClaimAsString("iss");
-
-        User user = userRepository.findByAuthProviderAndAuthSub(providerId, sub)
-                .orElseGet(() -> {
-                    User newUser = new User();
-                    newUser.setAuthProvider(providerId != null ? providerId : "google");
-                    newUser.setAuthSub(sub);
-                    newUser.setEmail(email);
-                    return userRepository.save(newUser);
-                });
-
-        Member member = memberRepository.findByUser(user)
-                .orElseGet(() -> seedData.createMember(user, name));
-
-        ClaimStatus claimStatus = null;
-        if (status != null && !status.isBlank()) {
-            try {
-                claimStatus = ClaimStatus.valueOf(status.toUpperCase());
-            } catch (IllegalArgumentException ignored) {
-            }
-        }
-        String providerStr = (provider != null) ? new String(provider.getBytes()) : null;
-
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("receivedDate").descending());
-        log.info("Fetching claims for memberId={} | status={} | provider={} | claimNumber={}",
-                member.getId(), claimStatus, provider, claimNumber);
-
-        Page<Claim> claims;
-        try {
-            claims = claimRepository.findFiltered(
-                    member.getId(), claimStatus, provider, claimNumber, pageable);
-        } catch (Exception e) {
-            log.error("🔥 Error fetching claims: {}", e.getMessage(), e);
-            throw e; // rethrow so Spring still returns 500
-        }
-
-        Page<ClaimsListDTO> dtoPage = claims.map(ClaimsListDTO::from);
+        Member member = authService.getOrCreateMemberFromJwt(jwt);
+        Page<ClaimsListDTO> dtoPage = claimService.getFilteredClaims(member, status, provider, claimNumber, page, size);
         return ResponseEntity.ok(dtoPage);
     }
+
     @GetMapping("/{claimNumber}")
-    public ResponseEntity<?> getClaimDetail(
+    public ResponseEntity<ClaimDetailDTO> getClaimDetail(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable String claimNumber
     ) {
-        log.info("Fetching claim detail for claimNumber={}", claimNumber);
-
-        String sub = jwt.getClaim("sub");
-        String providerId = jwt.getClaimAsString("iss");
-
-        User user = userRepository.findByAuthProviderAndAuthSub(providerId, sub)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Member member = memberRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Member not found"));
-
-        Claim claim = claimRepository.findByClaimNumber(claimNumber)
-                .orElseThrow(() -> new RuntimeException("Claim not found: " + claimNumber));
-
-        if (!claim.getMember().getId().equals(member.getId())) {
-            log.warn("Unauthorized access: member {} tried to access claim {}", member.getId(), claimNumber);
-            return ResponseEntity.status(403).body("You are not allowed to view this claim.");
-        }
-
-        return ResponseEntity.ok(com.greggtrunnelldashboard.backend.dto.ClaimDetailDTO.from(claim));
+        Member member = authService.getOrCreateMemberFromJwt(jwt);
+        ClaimDetailDTO detail = claimService.getClaimDetail(member, claimNumber);
+        return ResponseEntity.ok(detail);
     }
-
 }
