@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, UUID> {
-    Enrollment findByMember_IdAndActiveTrue(UUID memberId);
     Optional<Enrollment> findFirstByMemberAndActiveTrue(Member member);
 
 }
