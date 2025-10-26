@@ -10,13 +10,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Combines all information shown on the member dashboard:
- * - Member profile info
- * - Plan details
- * - Accumulator progress (deductible, out-of-pocket)
- * - Recent claims summary
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
