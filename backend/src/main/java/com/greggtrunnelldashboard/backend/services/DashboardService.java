@@ -1,6 +1,6 @@
 package com.greggtrunnelldashboard.backend.services;
 
-import com.greggtrunnelldashboard.backend.dto.MemberDTO;
+import com.greggtrunnelldashboard.backend.dto.DashboardDTO;
 import com.greggtrunnelldashboard.backend.entities.*;
 import com.greggtrunnelldashboard.backend.repositories.*;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +16,13 @@ public class DashboardService {
     private final AccumulatorRepository accumulatorRepository;
     private final ClaimRepository claimRepository;
 
-    public MemberDTO buildDashboardForMember(Member member) {
+    public DashboardDTO buildDashboardForMember(Member member) {
         Enrollment enrollment = enrollmentRepository.findFirstByMemberAndActiveTrue(member)
                 .orElseThrow(() -> new IllegalStateException("No active enrollment found"));
 
         List<Accumulator> accumulators = accumulatorRepository.findByEnrollmentId(enrollment.getId());
         List<Claim> claims = claimRepository.findTop5ByMemberIdOrderByReceivedDateDesc(member.getId());
 
-        return new MemberDTO(member, enrollment, accumulators, claims);
+        return DashboardDTO.from(member, enrollment, accumulators, claims);
     }
 }
